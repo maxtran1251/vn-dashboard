@@ -1,198 +1,155 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Đầu Tư VN</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #f7f7f5;
-      --surface: #ffffff;
-      --surface2: #f0efeb;
-      --border: rgba(0,0,0,0.08);
-      --text: #0b0b0b;
-      --text2: #52514e;
-      --muted: #898781;
-      --accent: #1a6ef5;
-      --accent-bg: #e8f0fe;
-      --up: #0ca30c;
-      --up-bg: #eaf3de;
-      --down: #d03b3b;
-      --down-bg: #fcebeb;
-      --radius: 10px;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #111110;
-        --surface: #1a1a19;
-        --surface2: #222220;
-        --border: rgba(255,255,255,0.08);
-        --text: #f5f5f3;
-        --text2: #c3c2b7;
-        --muted: #898781;
-        --accent-bg: #1a2a4a;
-        --up-bg: #162616;
-        --down-bg: #2a1616;
-      }
-    }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-    .wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 48px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Đầu Tư VN</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f7f5;--surface:#fff;--surface2:#f0efeb;--border:rgba(0,0,0,.08);
+  --text:#0b0b0b;--text2:#52514e;--muted:#898781;
+  --accent:#1a6ef5;--accent-bg:#e8f0fe;
+  --up:#0ca30c;--up-bg:#eaf3de;--down:#d03b3b;--down-bg:#fcebeb;
+  --radius:10px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#111110;--surface:#1a1a19;--surface2:#222220;--border:rgba(255,255,255,.08);
+  --text:#f5f5f3;--text2:#c3c2b7;--accent-bg:#1a2a4a;--up-bg:#162616;--down-bg:#2a1616;
+}}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.wrap{max-width:900px;margin:0 auto;padding:24px 16px 48px}
 
-    /* Header */
-    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
-    .header-left h1 { font-size: 20px; font-weight: 600; }
-    .header-left p { font-size: 13px; color: var(--muted); margin-top: 3px; }
-    .badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; background: var(--accent-bg); color: var(--accent); margin-left: 8px; }
-    .btn-update { display: flex; align-items: center; gap: 7px; padding: 9px 18px; border-radius: var(--radius); background: var(--accent); color: #fff; border: none; font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity .15s; }
-    .btn-update:hover { opacity: .88; }
-    .btn-update:disabled { opacity: .5; cursor: not-allowed; }
-    .btn-update svg { width: 15px; height: 15px; }
-    .btn-update.loading svg { animation: spin 1s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+/* Header */
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.header h1{font-size:19px;font-weight:600}
+.badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:var(--accent-bg);color:var(--accent);margin-left:8px}
+.header p{font-size:12px;color:var(--muted);margin-top:3px}
 
-    /* Metrics */
-    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
-    .metric { background: var(--surface2); border-radius: var(--radius); padding: 14px 16px; }
-    .metric-label { font-size: 11px; color: var(--muted); margin-bottom: 5px; font-weight: 500; text-transform: uppercase; letter-spacing: .03em; }
-    .metric-value { font-size: 22px; font-weight: 600; }
-    .metric-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
-    .up { color: var(--up); }
-    .down { color: var(--down); }
+/* Paste box */
+.paste-box{background:var(--surface);border:1.5px dashed var(--border);border-radius:14px;padding:16px 20px;margin-bottom:16px}
+.paste-box label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:8px}
+.paste-row{display:flex;gap:8px;align-items:flex-start}
+.paste-box textarea{flex:1;height:56px;font-size:12px;font-family:monospace;border:1px solid var(--border);border-radius:8px;padding:8px 10px;background:var(--surface2);color:var(--text);resize:none;outline:none}
+.paste-box textarea:focus{border-color:var(--accent)}
+.btn-apply{padding:10px 16px;border-radius:8px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.btn-apply:hover{opacity:.88}
+.paste-hint{font-size:11px;color:var(--muted);margin-top:6px}
+.paste-status{font-size:12px;margin-top:6px;font-weight:500}
 
-    /* Cards */
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin-bottom: 12px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
-    .card-title { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
-    .card-title svg { width: 14px; height: 14px; }
+/* Snapshot */
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px}
+.metric{background:var(--surface2);border-radius:var(--radius);padding:13px 15px}
+.metric-label{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:500;text-transform:uppercase;letter-spacing:.03em}
+.metric-value{font-size:21px;font-weight:600}
+.metric-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.up{color:var(--up)}.down{color:var(--down)}
 
-    /* ETF */
-    .etf-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); }
-    .etf-row:last-of-type { border-bottom: none; padding-bottom: 0; }
-    .etf-name { font-size: 14px; font-weight: 500; }
-    .etf-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
-    .etf-right { text-align: right; }
-    .etf-price { font-size: 15px; font-weight: 600; }
-    .etf-ytd { font-size: 11px; font-weight: 500; }
-    .etf-nav { font-size: 11px; color: var(--muted); padding-top: 10px; margin-top: 4px; border-top: 1px solid var(--border); }
+/* Cards */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:12px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+.card-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
 
-    /* Gold */
-    .gold-head { display: flex; justify-content: flex-end; gap: 24px; font-size: 11px; color: var(--muted); font-weight: 500; margin-bottom: 6px; }
-    .gold-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); }
-    .gold-row:last-of-type { border-bottom: none; }
-    .gold-brand { font-size: 13px; font-weight: 500; }
-    .gold-vals { display: flex; gap: 24px; }
-    .gold-buy { font-size: 13px; color: var(--muted); min-width: 44px; text-align: right; }
-    .gold-sell { font-size: 13px; font-weight: 600; min-width: 44px; text-align: right; }
-    .gold-note { font-size: 11px; color: var(--muted); padding-top: 10px; margin-top: 4px; border-top: 1px solid var(--border); }
+/* ETF */
+.etf-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+.etf-row:last-of-type{border-bottom:none;padding-bottom:0}
+.etf-name{font-size:13px;font-weight:500}
+.etf-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.etf-price{font-size:14px;font-weight:600;text-align:right}
+.etf-ytd{font-size:11px;font-weight:500;text-align:right}
+.etf-nav{font-size:11px;color:var(--muted);padding-top:8px;margin-top:4px;border-top:1px solid var(--border)}
 
-    /* BDS */
-    .bds-item { margin-bottom: 11px; }
-    .bds-item:last-of-type { margin-bottom: 0; }
-    .bds-name { font-size: 13px; font-weight: 500; }
-    .bds-val { font-size: 12px; color: var(--text2); margin-top: 2px; }
-    .bds-note { font-size: 11px; color: var(--muted); padding-top: 10px; margin-top: 8px; border-top: 1px solid var(--border); }
+/* Gold */
+.gold-head{display:flex;justify-content:flex-end;gap:22px;font-size:11px;color:var(--muted);font-weight:500;margin-bottom:5px}
+.gold-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)}
+.gold-row:last-of-type{border-bottom:none}
+.gold-brand{font-size:13px;font-weight:500}
+.gold-vals{display:flex;gap:22px}
+.gold-buy{font-size:12px;color:var(--muted);min-width:40px;text-align:right}
+.gold-sell{font-size:13px;font-weight:600;min-width:40px;text-align:right}
+.gold-note{font-size:11px;color:var(--muted);padding-top:8px;margin-top:4px;border-top:1px solid var(--border)}
 
-    /* News */
-    .news-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
-    .news-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .news-title { font-size: 13px; line-height: 1.5; }
-    .news-meta { font-size: 11px; color: var(--muted); margin-top: 3px; }
-    .tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
-    .tag-hot { background: #faece7; color: #993c1d; }
-    .tag-new { background: #e1f5ee; color: #0f6e56; }
+/* BDS */
+.bds-item{margin-bottom:10px}
+.bds-item:last-of-type{margin-bottom:0}
+.bds-name{font-size:13px;font-weight:500}
+.bds-val{font-size:12px;color:var(--text2);margin-top:2px}
+.bds-note{font-size:11px;color:var(--muted);padding-top:8px;margin-top:6px;border-top:1px solid var(--border)}
 
-    /* Digest */
-    .digest { background: var(--accent-bg); border: 1px solid rgba(26,110,245,.15); border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; }
-    .digest-label { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
-    .digest-point { font-size: 13px; color: var(--text); line-height: 1.6; padding: 4px 0; display: flex; gap: 10px; }
-    .digest-arrow { color: var(--accent); flex-shrink: 0; font-weight: 600; }
+/* News */
+.news-item{padding:7px 0;border-bottom:1px solid var(--border)}
+.news-item:last-child{border-bottom:none;padding-bottom:0}
+.news-title{font-size:13px;line-height:1.5}
+.news-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.tag{display:inline-block;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;margin-left:5px;vertical-align:middle}
+.tag-hot{background:#faece7;color:#993c1d}
+.tag-new{background:#e1f5ee;color:#0f6e56}
 
-    /* Empty */
-    .empty { font-size: 13px; color: var(--muted); padding: 16px 0; text-align: center; }
+/* Digest */
+.digest{background:var(--accent-bg);border:1px solid rgba(26,110,245,.15);border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.digest-label{font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.digest-point{font-size:13px;line-height:1.6;padding:3px 0;display:flex;gap:8px}
+.digest-arrow{color:var(--accent);flex-shrink:0;font-weight:600}
 
-    /* Status */
-    .status-bar { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--muted); padding-top: 16px; border-top: 1px solid var(--border); margin-top: 4px; }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); display: inline-block; margin-right: 5px; }
-    .status-dot.ok { background: var(--up); }
-    .status-dot.err { background: var(--down); }
+.empty{font-size:12px;color:var(--muted);padding:8px 0}
+.footer{font-size:11px;color:var(--muted);padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between}
 
-    /* Toast */
-    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--text); color: var(--bg); font-size: 13px; padding: 10px 20px; border-radius: 8px; transition: transform .25s; z-index: 99; white-space: nowrap; }
-    .toast.show { transform: translateX(-50%) translateY(0); }
+/* Claude link */
+.claude-hint{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.claude-hint p{font-size:12px;color:var(--text2);line-height:1.5}
+.claude-hint a{font-size:12px;font-weight:500;color:var(--accent);white-space:nowrap;text-decoration:none;border:1px solid var(--accent);padding:5px 12px;border-radius:6px}
+.claude-hint a:hover{background:var(--accent-bg)}
 
-    @media (max-width: 500px) {
-      .grid-4 { grid-template-columns: 1fr 1fr; }
-      .metric-value { font-size: 18px; }
-    }
-  </style>
+@media(max-width:500px){.grid-4{grid-template-columns:1fr 1fr}.metric-value{font-size:17px}}
+</style>
 </head>
 <body>
 <div class="wrap">
+
   <div class="header">
-    <div class="header-left">
+    <div>
       <h1>Dashboard Đầu Tư <span class="badge" id="date-badge">--/--</span></h1>
-      <p id="last-updated">Nhấn "Cập nhật" để tải dữ liệu mới nhất</p>
+      <p id="last-updated">Chưa có dữ liệu — paste JSON từ Claude để cập nhật</p>
     </div>
-    <button class="btn-update" id="updateBtn" onclick="fetchData()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-      Cập nhật
-    </button>
+  </div>
+
+  <!-- Hướng dẫn -->
+  <div class="claude-hint">
+    <p>Mở Claude Project → nhắn <strong>"cập nhật"</strong> → copy JSON → paste vào đây</p>
+    <a href="https://claude.ai/projects" target="_blank">Mở Claude ↗</a>
+  </div>
+
+  <!-- Paste box -->
+  <div class="paste-box">
+    <label>Dán JSON từ Claude</label>
+    <div class="paste-row">
+      <textarea id="json-input" placeholder='{"vnindex":{"value":"..."},...}'></textarea>
+      <button class="btn-apply" onclick="applyData()">Áp dụng</button>
+    </div>
+    <div class="paste-hint">Copy toàn bộ JSON Claude trả về → paste vào đây → nhấn Áp dụng</div>
+    <div class="paste-status" id="paste-status"></div>
   </div>
 
   <!-- Snapshot -->
   <div class="grid-4">
-    <div class="metric">
-      <div class="metric-label">VN-Index</div>
-      <div class="metric-value" id="s-vnindex">—</div>
-      <div class="metric-sub" id="s-vnindex-d">—</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">FUEVN100</div>
-      <div class="metric-value" id="s-etf100">—</div>
-      <div class="metric-sub" id="s-etf100-d">YTD —</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Vàng nhẫn / chỉ</div>
-      <div class="metric-value" id="s-gold">—</div>
-      <div class="metric-sub">bán ra · SJC</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">BĐS Sentiment</div>
-      <div class="metric-value" id="s-bds" style="font-size:15px;padding-top:5px">—</div>
-      <div class="metric-sub">TP.HCM</div>
-    </div>
+    <div class="metric"><div class="metric-label">VN-Index</div><div class="metric-value" id="s-vni">—</div><div class="metric-sub" id="s-vni-d">—</div></div>
+    <div class="metric"><div class="metric-label">FUEVN100</div><div class="metric-value" id="s-etf">—</div><div class="metric-sub" id="s-etf-d">YTD —</div></div>
+    <div class="metric"><div class="metric-label">Vàng nhẫn/chỉ</div><div class="metric-value" id="s-gold">—</div><div class="metric-sub">bán ra · SJC</div></div>
+    <div class="metric"><div class="metric-label">BĐS Sentiment</div><div class="metric-value" id="s-bds" style="font-size:14px;padding-top:4px">—</div><div class="metric-sub">TP.HCM</div></div>
   </div>
 
   <!-- ETF + Gold -->
   <div class="grid-2">
     <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-        ETF theo dõi
-      </div>
-      <div class="etf-row">
-        <div><div class="etf-name">FUEVN100</div><div class="etf-sub">VN100 · VinaCapital</div></div>
-        <div class="etf-right"><div class="etf-price" id="e-f100">—</div><div class="etf-ytd" id="e-f100-ytd">YTD —</div></div>
-      </div>
-      <div class="etf-row">
-        <div><div class="etf-name">E1VFVN30</div><div class="etf-sub">VN30 · Dragon Capital</div></div>
-        <div class="etf-right"><div class="etf-price" id="e-vn30">—</div><div class="etf-ytd" id="e-vn30-ytd">YTD —</div></div>
-      </div>
-      <div class="etf-row">
-        <div><div class="etf-name">FUEMAV30</div><div class="etf-sub">VN30 · Mirae Asset</div></div>
-        <div class="etf-right"><div class="etf-price" id="e-mav">—</div><div class="etf-ytd" id="e-mav-ytd">YTD —</div></div>
-      </div>
+      <div class="card-title">ETF theo dõi</div>
+      <div class="etf-row"><div><div class="etf-name">FUEVN100</div><div class="etf-sub">VN100 · VinaCapital</div></div><div><div class="etf-price" id="e-f100">—</div><div class="etf-ytd" id="e-f100-ytd">YTD —</div></div></div>
+      <div class="etf-row"><div><div class="etf-name">E1VFVN30</div><div class="etf-sub">VN30 · Dragon Capital</div></div><div><div class="etf-price" id="e-vn30">—</div><div class="etf-ytd" id="e-vn30-ytd">YTD —</div></div></div>
+      <div class="etf-row"><div><div class="etf-name">FUEMAV30</div><div class="etf-sub">VN30 · Mirae Asset</div></div><div><div class="etf-price" id="e-mav">—</div><div class="etf-ytd" id="e-mav-ytd">YTD —</div></div></div>
       <div class="etf-nav" id="etf-nav">NAV FUEVN100: — · Premium/Discount: —</div>
     </div>
-
     <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        Vàng nhẫn 999.9 (triệu/chỉ)
-      </div>
+      <div class="card-title">Vàng nhẫn 999.9 (triệu/chỉ)</div>
       <div class="gold-head"><span>Mua vào</span><span>Bán ra</span></div>
       <div class="gold-row"><span class="gold-brand">SJC</span><div class="gold-vals"><span class="gold-buy" id="g-sjc-b">—</span><span class="gold-sell" id="g-sjc-s">—</span></div></div>
       <div class="gold-row"><span class="gold-brand">DOJI</span><div class="gold-vals"><span class="gold-buy" id="g-doji-b">—</span><span class="gold-sell" id="g-doji-s">—</span></div></div>
@@ -205,21 +162,14 @@
   <!-- BDS + News -->
   <div class="grid-2">
     <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        BĐS TP.HCM theo khu vực
-      </div>
+      <div class="card-title">BĐS TP.HCM theo khu vực</div>
       <div class="bds-item"><div class="bds-name">Quận 2 — Thủ Thiêm, An Phú</div><div class="bds-val" id="b-q2">—</div></div>
       <div class="bds-item"><div class="bds-name">Quận 9 — TP. Thủ Đức</div><div class="bds-val" id="b-q9">—</div></div>
       <div class="bds-item"><div class="bds-name">Bình Thạnh — Khu Thanh Đa</div><div class="bds-val" id="b-bt">—</div></div>
       <div class="bds-note" id="b-supply">Nguồn cung 2026: — · Nhu cầu ở thực: ~50.000 căn/năm</div>
     </div>
-
     <div class="card">
-      <div class="card-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        Tin BĐS nổi bật
-      </div>
+      <div class="card-title">Tin BĐS nổi bật</div>
       <div id="news-block"><div class="empty">Chưa có dữ liệu</div></div>
     </div>
   </div>
@@ -227,131 +177,106 @@
   <!-- Digest -->
   <div class="digest">
     <div class="digest-label">✦ AI Digest hôm nay</div>
-    <div id="digest-block"><div class="empty" style="text-align:left;padding:0">Nhấn Cập nhật để nhận phân tích tổng hợp từ Claude</div></div>
+    <div id="digest-block"><div class="empty">Paste JSON từ Claude để xem phân tích</div></div>
   </div>
 
-  <div class="status-bar">
-    <div><span class="status-dot" id="status-dot"></span><span id="status-text">Sẵn sàng</span></div>
-    <span id="status-time"></span>
+  <div class="footer">
+    <span id="footer-status">Sẵn sàng</span>
+    <span id="footer-time"></span>
   </div>
+
 </div>
-
-<div class="toast" id="toast"></div>
-
 <script>
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
+const tc=t=>t==='up'?'up':t==='down'?'down':'';
 
-function showToast(msg, ms = 3000) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), ms);
+function setStatus(msg,ok){
+  const el=$('paste-status');
+  el.textContent=msg;
+  el.style.color=ok?'#0ca30c':'#d03b3b';
 }
 
-function tc(trend) {
-  return trend === 'up' ? 'up' : trend === 'down' ? 'down' : '';
+function applyData(){
+  const raw=$('json-input').value.trim();
+  if(!raw){setStatus('Vui lòng paste JSON vào ô trên',false);return;}
+  try{
+    const m=raw.match(/\{[\s\S]*\}/);
+    if(!m)throw new Error('Không tìm thấy JSON');
+    const d=JSON.parse(m[0]);
+    render(d);
+    $('json-input').value='';
+    setStatus('✓ Cập nhật thành công!',true);
+    const now=new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
+    $('last-updated').textContent='Cập nhật lúc '+now;
+    $('footer-time').textContent=now;
+    $('footer-status').textContent='Dữ liệu đã cập nhật';
+    try{localStorage.setItem('vn_dashboard_data',JSON.stringify(d));localStorage.setItem('vn_dashboard_time',now);}catch(e){}
+  }catch(e){setStatus('Lỗi: '+e.message,false);}
 }
 
-function render(d) {
-  if (d.vnindex) {
-    $('s-vnindex').textContent = d.vnindex.value || '—';
-    $('s-vnindex-d').textContent = d.vnindex.delta || '—';
-    $('s-vnindex-d').className = 'metric-sub ' + tc(d.vnindex.trend);
+function render(d){
+  if(d.vnindex){
+    $('s-vni').textContent=d.vnindex.value||'—';
+    $('s-vni-d').textContent=d.vnindex.delta||'—';
+    $('s-vni-d').className='metric-sub '+tc(d.vnindex.trend);
+  }
+  const f=d.etf?.fuevn100;
+  if(f){
+    $('s-etf').textContent=f.price||'—';
+    $('s-etf-d').textContent='YTD '+(f.ytd||'—');
+    $('s-etf-d').className='metric-sub '+tc(f.trend);
+    $('e-f100').textContent=f.price||'—';
+    $('e-f100-ytd').textContent='YTD '+(f.ytd||'—');
+    $('e-f100-ytd').className='etf-ytd '+tc(f.trend);
+    $('etf-nav').textContent='NAV: '+(f.nav||'—')+'đ · Premium/Discount: '+(f.premium||'—');
+  }
+  const v=d.etf?.e1vfvn30;
+  if(v){$('e-vn30').textContent=v.price||'—';$('e-vn30-ytd').textContent='YTD '+(v.ytd||'—');$('e-vn30-ytd').className='etf-ytd '+tc(v.trend);}
+  const mv=d.etf?.fuemav30;
+  if(mv){$('e-mav').textContent=mv.price||'—';$('e-mav-ytd').textContent='YTD '+(mv.ytd||'—');$('e-mav-ytd').className='etf-ytd '+tc(mv.trend);}
+
+  if(d.gold){
+    const g=d.gold;
+    $('s-gold').textContent=g.sjc?.sell||'—';
+    if(g.sjc){$('g-sjc-b').textContent=g.sjc.buy;$('g-sjc-s').textContent=g.sjc.sell;}
+    if(g.doji){$('g-doji-b').textContent=g.doji.buy;$('g-doji-s').textContent=g.doji.sell;}
+    if(g.pnj){$('g-pnj-b').textContent=g.pnj.buy;$('g-pnj-s').textContent=g.pnj.sell;}
+    if(g.btmc){$('g-btmc-b').textContent=g.btmc.buy;$('g-btmc-s').textContent=g.btmc.sell;}
+  }
+  if(d.gold_world)$('gold-world').textContent='Thế giới: '+d.gold_world+' · '+(d.gold_diff||'');
+
+  if(d.bds){
+    $('b-q2').textContent=d.bds.q2||'—';
+    $('b-q9').textContent=d.bds.q9||'—';
+    $('b-bt').textContent=d.bds.binh_thanh||'—';
+    $('b-supply').textContent='Nguồn cung 2026: '+(d.bds.supply||'—')+' · Nhu cầu ở thực: ~50.000 căn/năm';
+    $('s-bds').textContent=d.bds.sentiment||'—';
   }
 
-  const f = d.etf?.fuevn100;
-  if (f) {
-    $('s-etf100').textContent = f.price || '—';
-    $('s-etf100-d').textContent = 'YTD ' + (f.ytd || '—');
-    $('s-etf100-d').className = 'metric-sub ' + tc(f.trend);
-    $('e-f100').textContent = f.price || '—';
-    $('e-f100-ytd').textContent = 'YTD ' + (f.ytd || '—');
-    $('e-f100-ytd').className = 'etf-ytd ' + tc(f.trend);
-    $('etf-nav').textContent = `NAV: ${f.nav || '—'}đ · Premium/Discount: ${f.premium || '—'}`;
-  }
-  const v = d.etf?.e1vfvn30;
-  if (v) {
-    $('e-vn30').textContent = v.price || '—';
-    $('e-vn30-ytd').textContent = 'YTD ' + (v.ytd || '—');
-    $('e-vn30-ytd').className = 'etf-ytd ' + tc(v.trend);
-  }
-  const m = d.etf?.fuemav30;
-  if (m) {
-    $('e-mav').textContent = m.price || '—';
-    $('e-mav-ytd').textContent = 'YTD ' + (m.ytd || '—');
-    $('e-mav-ytd').className = 'etf-ytd ' + tc(m.trend);
-  }
-
-  if (d.gold) {
-    const g = d.gold;
-    $('s-gold').textContent = g.sjc?.sell || '—';
-    if (g.sjc) { $('g-sjc-b').textContent = g.sjc.buy; $('g-sjc-s').textContent = g.sjc.sell; }
-    if (g.doji) { $('g-doji-b').textContent = g.doji.buy; $('g-doji-s').textContent = g.doji.sell; }
-    if (g.pnj) { $('g-pnj-b').textContent = g.pnj.buy; $('g-pnj-s').textContent = g.pnj.sell; }
-    if (g.btmc) { $('g-btmc-b').textContent = g.btmc.buy; $('g-btmc-s').textContent = g.btmc.sell; }
-  }
-  if (d.gold_world) $('gold-world').textContent = `Thế giới: ${d.gold_world} · ${d.gold_diff || ''}`;
-
-  if (d.bds) {
-    $('b-q2').textContent = d.bds.q2 || '—';
-    $('b-q9').textContent = d.bds.q9 || '—';
-    $('b-bt').textContent = d.bds.binh_thanh || '—';
-    $('b-supply').textContent = `Nguồn cung 2026: ${d.bds.supply || '—'} · Nhu cầu ở thực: ~50.000 căn/năm`;
-    $('s-bds').textContent = d.bds.sentiment || '—';
-  }
-
-  if (d.news?.length) {
-    $('news-block').innerHTML = d.news.map(n => `
+  if(d.news?.length){
+    $('news-block').innerHTML=d.news.map(n=>`
       <div class="news-item">
-        <div class="news-title">${n.title}${n.tag === 'hot' ? '<span class="tag tag-hot">nóng</span>' : n.tag === 'new' ? '<span class="tag tag-new">mới</span>' : ''}</div>
+        <div class="news-title">${n.title}${n.tag==='hot'?'<span class="tag tag-hot">nóng</span>':n.tag==='new'?'<span class="tag tag-new">mới</span>':''}</div>
         <div class="news-meta">${n.meta}</div>
       </div>`).join('');
   }
-
-  if (d.digest?.length) {
-    $('digest-block').innerHTML = d.digest.map(p =>
-      `<div class="digest-point"><span class="digest-arrow">→</span><span>${p}</span></div>`).join('');
+  if(d.digest?.length){
+    $('digest-block').innerHTML=d.digest.map(p=>`<div class="digest-point"><span class="digest-arrow">→</span><span>${p}</span></div>`).join('');
   }
 }
 
-async function fetchData() {
-  const btn = $('updateBtn');
-  btn.disabled = true;
-  btn.classList.add('loading');
-  $('status-dot').className = 'status-dot';
-  $('status-text').textContent = 'Đang tìm kiếm dữ liệu...';
-  $('last-updated').textContent = 'Đang cập nhật...';
-
-  try {
-    const res = await fetch('/api/update', { method: 'POST' });
-    const json = await res.json();
-
-    if (!json.success) throw new Error(json.error || 'Unknown error');
-
-    render(json.data);
-
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-    $('last-updated').textContent = `Cập nhật lúc ${timeStr}`;
-    $('status-text').textContent = 'Cập nhật thành công';
-    $('status-time').textContent = timeStr;
-    $('status-dot').className = 'status-dot ok';
-    showToast('✓ Đã cập nhật dữ liệu mới nhất');
-
-  } catch (e) {
-    $('status-text').textContent = 'Lỗi: ' + e.message;
-    $('status-dot').className = 'status-dot err';
-    $('last-updated').textContent = 'Cập nhật thất bại — thử lại';
-    showToast('✗ ' + e.message, 5000);
+// Khôi phục data lần trước
+try{
+  const saved=localStorage.getItem('vn_dashboard_data');
+  const savedTime=localStorage.getItem('vn_dashboard_time');
+  if(saved){
+    render(JSON.parse(saved));
+    $('last-updated').textContent='Dữ liệu lần trước: '+savedTime+' (paste mới để cập nhật)';
+    $('last-updated').style.color='var(--muted)';
   }
+}catch(e){}
 
-  btn.disabled = false;
-  btn.classList.remove('loading');
-}
-
-// Init date
-const d = new Date();
-$('date-badge').textContent = d.toLocaleDateString('vi-VN');
+$('date-badge').textContent=new Date().toLocaleDateString('vi-VN');
 </script>
 </body>
 </html>
