@@ -92,6 +92,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .digest-point{font-size:13px;line-height:1.6;padding:3px 0;display:flex;gap:8px}
 .digest-arrow{color:var(--accent);flex-shrink:0;font-weight:600}
 
+/* Trend box - dài hạn */
+.trend-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid #7c5cff;border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.trend-label{font-size:11px;font-weight:600;color:#7c5cff;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.trend-point{font-size:13px;line-height:1.7;padding:4px 0}
+.trend-point strong{color:var(--text)}
+.trend-horizon{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:rgba(124,92,255,.12);color:#7c5cff;margin-right:6px;vertical-align:middle}
+
 .empty{font-size:12px;color:var(--muted);padding:8px 0}
 .footer{font-size:11px;color:var(--muted);padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between}
 
@@ -174,10 +181,16 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
   </div>
 
-  <!-- Digest -->
+  <!-- Digest hôm nay -->
   <div class="digest">
     <div class="digest-label">✦ AI Digest hôm nay</div>
     <div id="digest-block"><div class="empty">Paste JSON từ Claude để xem phân tích</div></div>
+  </div>
+
+  <!-- Xu hướng dài hạn -->
+  <div class="trend-box">
+    <div class="trend-label">📈 Xu hướng dài hạn (3–6 tháng)</div>
+    <div id="trend-block"><div class="empty">Paste JSON từ Claude để xem nhận định xu hướng</div></div>
   </div>
 
   <div class="footer">
@@ -262,6 +275,12 @@ function render(d){
   }
   if(d.digest?.length){
     $('digest-block').innerHTML=d.digest.map(p=>`<div class="digest-point"><span class="digest-arrow">→</span><span>${p}</span></div>`).join('');
+  }
+  if(d.trend?.length){
+    $('trend-block').innerHTML=d.trend.map(t=>{
+      if(typeof t==='string')return `<div class="trend-point">${t}</div>`;
+      return `<div class="trend-point"><span class="trend-horizon">${t.label||'Xu hướng'}</span>${t.text||t}</div>`;
+    }).join('');
   }
 }
 
